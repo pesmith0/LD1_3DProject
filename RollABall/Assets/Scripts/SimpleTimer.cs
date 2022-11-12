@@ -7,12 +7,12 @@ public class SimpleTimer : MonoBehaviour
 {
     public float timeLimit = 20;
     private float timeGamePlayingStarted;
-    private GameController gameController;
+    public GameController gameController;
 
-    private void Awake()
-    {
-        gameController = GetComponentInParent<GameController>();
-    }
+    //private void Awake()
+    //{
+    //    gameController = GetComponentInParent<GameController>();
+    //}
     
     // Start is called before the first frame update
     private void Start()

@@ -39,6 +39,15 @@ public class PlayerController : MonoBehaviour {
 		// Add a physical force to our Player rigidbody using our 'movement' Vector3 above, 
 		// multiplying it by 'speed' - our public player speed that appears in the inspector
 		rb.AddForce (movement * speed);
+
+		//Debug.Log(this.transform.position.y); // whyyyyyyyy is this different from the variable you can actually see in the inspector??????
+		// if I need to change this for a different level, try checking localPosition (inspector version)
+
+		if (this.transform.position.y < -10) // if you fall off the map, instantly lose the game
+        {
+			//Debug.Log("losing the game");
+			gameController.StateUpdate(GameController.GameStates.GameLost);
+		}
 	}
 
 	// When this game object intersects a collider with 'is trigger' checked, 

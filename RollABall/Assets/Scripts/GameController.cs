@@ -16,6 +16,11 @@ public class GameController : MonoBehaviour
     private GameStates gameState;
     private int maxCollectiblesCount;
 
+    //public GameStates GetGameStates()
+    //{
+
+    //}
+
     private void Start()
     {
         gameView = GetComponentInChildren<GameView>();
