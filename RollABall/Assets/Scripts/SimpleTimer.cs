@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SimpleTimer : MonoBehaviour
 {
-    public float timeLimit = 20;
+    public float timeLimit = -1; // use inspector GUI
     private float timeGamePlayingStarted;
     public GameController gameController;
 
@@ -29,7 +29,10 @@ public class SimpleTimer : MonoBehaviour
         {
             //Update game state on controller to be game lost
             gameController.StateUpdate(GameController.GameStates.GameLost);
+            print("timer ran out, losing the game");
             //Turn off this component, disables functionality so we don't spam the GameController
+
+            //ResetTimer(); // prevents infinite death
             this.enabled = false;
         }
         
@@ -37,5 +40,10 @@ public class SimpleTimer : MonoBehaviour
         int timerCount = (int) timeSinceGamePlayingStarted;
         //Update Timer text on screen
         gameController.UpdateGameTimer(timerCount);
+    }
+
+    public void ResetTimer()
+    {
+        timeGamePlayingStarted = Time.time;
     }
 }

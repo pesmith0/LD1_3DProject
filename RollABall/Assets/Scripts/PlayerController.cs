@@ -43,10 +43,18 @@ public class PlayerController : MonoBehaviour {
 		//Debug.Log(this.transform.position.y); // whyyyyyyyy is this different from the variable you can actually see in the inspector??????
 		// if I need to change this for a different level, try checking localPosition (inspector version)
 
-		if (this.transform.position.y < -10) // if you fall off the map, instantly lose the game
+		if (this.transform.position.y < -10) // if you fall off the map, instantly lose the game (unless you have already won)
         {
 			//Debug.Log("losing the game");
-			gameController.StateUpdate(GameController.GameStates.GameLost);
+			if (gameController.GetGameState() == GameController.GameStates.GamePlaying)
+			{
+				gameController.StateUpdate(GameController.GameStates.GameLost);
+			}
+			else
+            {
+				rb.AddForce(new Vector3(0, 50, 0));
+				rb.velocity = new Vector3(rb.velocity.x * 0.8F, rb.velocity.y, rb.velocity.z * 0.8F);
+			}
 		}
 	}
 
@@ -61,10 +69,20 @@ public class PlayerController : MonoBehaviour {
 			other.gameObject.SetActive (false);
 
 			// Add one to the score variable 'count'
-			count = count + 1;
+			count += 1;
 
 			// Run the GameController function for picking up a collectible
 			gameController.OnPickUpCollectible(count);
 		}
 	}
+
+	public void SetCount(int newCount)
+    {
+		count = newCount;
+    }
+
+	public void Kill()
+    {
+		this.gameObject.SetActive(false);
+    }
 }

@@ -19,6 +19,7 @@ public class LevelManager : MonoBehaviour // modified code from BrickBuster proj
     {
         currentLevel++;
         if (IsGameOver())
+            // ### win the game (not implemented yet)
             return;
         LoadNextLevel();
     }
@@ -30,10 +31,17 @@ public class LevelManager : MonoBehaviour // modified code from BrickBuster proj
         return false;
     }
 
+    public void RestartCurrentLevel()
+    {
+        LoadNextLevel();
+    }
+
     private void LoadNextLevel()
     {
         if (levelGameObject != null)
+        {
             Destroy(levelGameObject);
+        }
         levelGameObject = CreateLevel();
         SpawnPlayer();
     }
@@ -47,5 +55,7 @@ public class LevelManager : MonoBehaviour // modified code from BrickBuster proj
     {
         GameObject spawn = levelGameObject.transform.Find("Spawn").gameObject;
         player.transform.position = spawn.transform.position;
+        player.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        player.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
     }
 }
