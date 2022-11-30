@@ -44,6 +44,15 @@ public class GameController : MonoBehaviour
                 StateUpdate(GameStates.GamePlaying);
             }
         }
+        if (Input.GetKeyDown("o"))
+        {
+            if (gameState == GameStates.GamePlaying)
+            {
+                print("skipping to next level");
+                levelManager.GoToNextLevel();
+                StateUpdate(GameStates.GamePlaying);
+            }
+        }
         //if (Input.GetKeyDown("q"))
         //{
         //    print("max collectibles = " + maxCollectiblesCount);
