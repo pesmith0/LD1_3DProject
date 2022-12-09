@@ -17,6 +17,8 @@ public class EnemyController : MonoBehaviour
     {
         // Assign the Rigidbody component to our private rb variable
         rb = GetComponent<Rigidbody>();
+
+        playerController = FindObjectOfType<PlayerController>();
     }
 
     // Update is called once per frame

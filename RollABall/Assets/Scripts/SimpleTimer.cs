@@ -32,7 +32,6 @@ public class SimpleTimer : MonoBehaviour
             print("timer ran out, losing the game");
             //Turn off this component, disables functionality so we don't spam the GameController
 
-            //ResetTimer(); // prevents infinite death
             this.enabled = false;
         }
         
@@ -45,5 +44,10 @@ public class SimpleTimer : MonoBehaviour
     public void ResetTimer()
     {
         timeGamePlayingStarted = Time.time;
+    }
+
+    public void SetTimeLimit(float newLimit)
+    {
+        timeLimit = newLimit;
     }
 }

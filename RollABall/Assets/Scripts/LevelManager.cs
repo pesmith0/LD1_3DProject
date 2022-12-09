@@ -6,6 +6,8 @@ public class LevelManager : MonoBehaviour // modified code from BrickBuster proj
 {
     public List<GameObject> levels;
     public PlayerController player;
+    public SimpleTimer timer;
+    public GameController gameController;
     private GameObject levelGameObject;
     private int currentLevel = 0;
 
@@ -15,13 +17,18 @@ public class LevelManager : MonoBehaviour // modified code from BrickBuster proj
         SpawnPlayer();
     }
 
-    public void GoToNextLevel()
+    public int GoToNextLevel()
     {
         currentLevel++;
         if (IsGameOver())
-            // ### win the game (not implemented yet)
-            return;
+        {
+            //print("winning game");
+            gameController.StateUpdate(GameController.GameStates.GameWon);
+            player.Kill();
+            return 1;
+        }
         LoadNextLevel();
+        return 0;
     }
 
     public bool IsGameOver()
@@ -44,6 +51,13 @@ public class LevelManager : MonoBehaviour // modified code from BrickBuster proj
         }
         levelGameObject = CreateLevel();
         SpawnPlayer();
+
+        TimeLimitOverride timeLimitOverrideObj = levelGameObject.GetComponentInChildren<TimeLimitOverride>();
+
+        if (timeLimitOverrideObj != null)
+        {
+            timer.SetTimeLimit(timeLimitOverrideObj.timeLimitOverride);
+        }
     }
 
     private GameObject CreateLevel()

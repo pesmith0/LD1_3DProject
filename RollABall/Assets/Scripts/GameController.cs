@@ -34,8 +34,11 @@ public class GameController : MonoBehaviour
             if (gameState == GameStates.LevelComplete)
             {
                 //print("advancing to next level");
-                levelManager.GoToNextLevel();
-                StateUpdate(GameStates.GamePlaying);
+                int nextLevel = levelManager.GoToNextLevel();
+                if (nextLevel == 0)
+                {
+                    StateUpdate(GameStates.GamePlaying);
+                }
             }
             else if (gameState == GameStates.GameLost)
             {
@@ -50,7 +53,7 @@ public class GameController : MonoBehaviour
             {
                 print("skipping to next level");
                 levelManager.GoToNextLevel();
-                StateUpdate(GameStates.GamePlaying);
+                //StateUpdate(GameStates.GamePlaying);
             }
         }
         //if (Input.GetKeyDown("q"))
@@ -88,18 +91,22 @@ public class GameController : MonoBehaviour
         gameView.timerText.gameObject.SetActive(true);
     }
 
-    private void OnGameWon() // happens after completing last level (### not yet implemented)
+    public void OnGameWon() // happens after completing last level (### not yet implemented)
     {
+        //print("OnGameWon() activate");
         gameState = GameStates.GameWon;
 
         // Set the text value of our result text
         gameView.resultText.gameObject.SetActive(true);
         gameView.resultText.text = "You Win!";
-        gameView.resultText.color = new Color(255,255,50);
+        gameView.resultText.color = new Color(1.0F, 0.9F, 0.2F);
+        gameView.resultText.fontSize *= 2;
 
         //Hide count and timer text
         gameView.countText.gameObject.SetActive(false);
         gameView.timerText.gameObject.SetActive(false);
+
+        timer.enabled = false;
     }
 
     private void OnLevelComplete() // happens after completing a level
@@ -184,10 +191,6 @@ public class GameController : MonoBehaviour
         {
             //StateUpdate(GameStates.GameWon);
             StateUpdate(GameStates.LevelComplete);
-        }
-        else if (remainingPickups < 0)
-        {
-            Debug.Log("Unity is garbage LMAO");
         }
 
         //// Check if our 'count' is equal to or exceeded our maxCollectibles count
